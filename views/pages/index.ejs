@@ -3,16 +3,41 @@
 <head>
   <% include ../partials/header.ejs %>
 </head>
-
 <body>
 
   <% include ../partials/nav.ejs %>
 
-  <div class="absolute">
-    <p> hello </p>
+  <div id ="leftDiv">
+
+    <script>
+$(document).ready(function(){
+  console.log("aosidh");
+    $.getJSON( "http://192.168.1.102:5000/getrain", function( data ) {
+      console.log(data[0].summary);
+    }).fail(function (jqxhr, status, error) {
+console.log('error', status, error) }
+);
+});
+</script>
+
+
+    <p> Google cal hereee </p>
   </div>
 
+  <div id="rightUpper">
+    <h2 class="text"> Nästa tunnelbana går om 10 minuter </h2>
+    <p>Senare avgångar:</p>
+    <ul>
+      <li>20 minuter</li>
+      <li>30 minuter</li>
+      <li>40 minuter</li>
+      <li>50 minuter</li>
+    </ul>
+  </div>
 
+  <div id="rightDown">
+    bottom yee
+  </div>
 
 
 </body>
