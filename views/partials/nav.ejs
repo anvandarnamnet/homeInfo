@@ -5,8 +5,20 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class="navbar-right">
-        12:00 8 December 2016
+        <p id="clock"></p>
+
       </li>
+
+      <script>
+      $(document).ready(function(){
+        setInterval(function(){
+          var date = new Date();
+          $("#clock").empty();
+          var appenDate = date.toLocaleString() + "";
+          $("#clock").append(appenDate);
+        }, 1000);
+      });
+      </script>
     </ul>
   </div>
 </nav>

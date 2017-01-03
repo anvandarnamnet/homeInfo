@@ -13,15 +13,29 @@
     left: 0px;
     width: 50%;
     height: 92%;
-    border: 3px solid #73AD21;
 
+
+}
+#later{
+  font-size: 30px;
+}
+
+#jamn{
+  font-size: 20px;
+  color: #a7a7a7;
+
+}
+
+#ojamn{
+  font-size: 20px;
+  color:white;
 }
 
 ul{
   font-style: normal;
   font-family: sans-serif;
   color: white;
-  font-size: 20px;
+  font-size: 30px;
 }
 p{
   font-style: normal;
@@ -42,16 +56,19 @@ h2{
   right: 0px;
   left:50%;
   height: 420px;
-  border: 3px solid #73AD21;
+
 }
 
+ul{
+  margin-left: 10px;
+}
 #rightDown{
   position: absolute;
   top:50%;
   right: 0px;
   left:50%;
   height: 50%;
-  border: 3px solid #73AD21;
+
 }
 
 #back{
@@ -59,7 +76,8 @@ h2{
 }
 
 body{
-  background-image: url("/pages/bg.jpg");
-  background-color: black;
+  background: white url("bg.jpg");
+  background-size: cover;
+
 
 }

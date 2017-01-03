@@ -10,35 +10,221 @@
   <div id ="leftDiv">
 
     <script>
-$(document).ready(function(){
-  console.log("aosidh");
-    $.getJSON( "http://192.168.1.102:5000/getrain", function( data ) {
-      console.log(data[0].summary);
-    }).fail(function (jqxhr, status, error) {
-console.log('error', status, error) }
-);
-});
-</script>
+        $(document).ready(function(){
+          $.getJSON("http://193.11.186.149:5000/getcal", function(data){
+            $("#leftDiv").empty();
+
+            for(var i = 0; i < 8; i++){
+              var date = "";
+              var timestamp = data[i].start.dateTime + "";
 
 
-    <p> Google cal hereee </p>
+              var comp = Number(timestamp.substring(8,10));
+              var now = new Date();
+              var nowDate = Number(now.getDate());
+
+              if(comp == nowDate){
+
+                //date += timestamp.substring(0,10);
+                date += "Idag"
+                date += " klockan: ";
+                date += timestamp.substring(11,16);
+
+                if(i % 2 == 0){
+                  $("#leftDiv").append("<p id=\"jamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                } else{
+                  $("#leftDiv").append("<p id=\"ojamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                }
+              } else if (comp == nowDate + 1){
+                date += "imorgon"
+                date += " klockan: ";
+                date += timestamp.substring(11,16);
+
+                if(i % 2 == 0){
+                  $("#leftDiv").append("<p id=\"jamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                } else{
+                  $("#leftDiv").append("<p id=\"ojamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                }
+              } else{
+                date += timestamp.substring(0,10);
+                date += " klockan: ";
+                date += timestamp.substring(11,16);
+
+                if(i % 2 == 0){
+                  $("#leftDiv").append("<p id=\"jamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                } else{
+                  $("#leftDiv").append("<p id=\"ojamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                }
+              }
+
+
+
+            }
+          });
+          setInterval(function(){
+            $.getJSON("http://193.11.186.149:5000/getcal", function(data){
+
+              $("#leftDiv").empty();
+
+              for(var i = 0; i < 8; i++){
+                var date = "";
+                var timestamp = data[i].start.dateTime + "";
+
+
+                var comp = Number(timestamp.substring(8,10));
+                var now = new Date();
+                var nowDate = Number(now.getDate());
+
+                if(comp == nowDate){
+
+                  //date += timestamp.substring(0,10);
+                  date += "Idag"
+                  date += " klockan: ";
+                  date += timestamp.substring(11,16);
+
+                  if(i % 2 == 0){
+                    $("#leftDiv").append("<p id=\"jamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                  } else{
+                    $("#leftDiv").append("<p id=\"ojamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                  }
+                } else if (comp == nowDate + 1){
+                  date += "imorgon"
+                  date += " klockan: ";
+                  date += timestamp.substring(11,16);
+
+                  if(i % 2 == 0){
+                    $("#leftDiv").append("<p id=\"jamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                  } else{
+                    $("#leftDiv").append("<p id=\"ojamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                  }
+                } else{
+                  date += timestamp.substring(0,10);
+                  date += " klockan: ";
+                  date += timestamp.substring(11,16);
+
+                  if(i % 2 == 0){
+                    $("#leftDiv").append("<p id=\"jamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                  } else{
+                    $("#leftDiv").append("<p id=\"ojamn\">" + data[i].summary + "</br>" + date +  "</br></br> </p>");
+                  }
+                }
+              }
+            });
+          }, 60000);
+
+        });
+    </script>
+
   </div>
 
   <div id="rightUpper">
-    <h2 class="text"> Nästa tunnelbana går om 10 minuter </h2>
-    <p>Senare avgångar:</p>
-    <ul>
-      <li>20 minuter</li>
-      <li>30 minuter</li>
-      <li>40 minuter</li>
-      <li>50 minuter</li>
+    <h2 class="text" id="tbHead"> Nästa tunnelbana går om 10 minuter </h2>
+    <p id="later">Senare avgångar:</p>
+    <ul id="tbNext">
     </ul>
   </div>
+  <script>
+  $(document).ready(function(){
+    setInterval(function(){
+      $.getJSON("http://193.11.186.149:5000/getsl",function(data){
+        var incomingData = data;
+        var date = new Date();
+        var text = "Nästa tunnelbana går ";
+          text += "klockan ";
+          text += incomingData[0];
+
+
+        $("#tbHead").empty();
+        $("#tbHead").append(text);
+
+
+        // time for displaying shit
+        var list = "";
+         for(i=1; i<6; i++){
+           list +="<li>"+incomingData[i]+"</li>";
+         }
+         $("#tbNext").empty();
+         $("#tbNext").append(list);
+
+
+      });
+    },1000);
+
+    $.getJSON("http://193.11.186.149:5000/getsl",function(data){
+      var incomingData = data;
+      var date = new Date();
+      var text = "Nästa tunnelbana går ";
+      text += "klockan ";
+      text += incomingData[0];
+
+      $("#tbHead").empty();
+      $("#tbHead").append(text);
+
+      // time for displaying shit
+      var list = "";
+       for(i=1; i<6; i++){
+         list +="<li>"+incomingData[i]+"</li>";
+       }
+
+       $("#tbNext").empty();
+       $("#tbNext").append(list);
+
+    });
+  });
+
+  </script>
 
   <div id="rightDown">
-    bottom yee
+    <h2 class ="text" id="text"> </h2>
+    <!-- <img id="image"></img>  -->
+
+    <script>
+    $(document).ready(function(){
+
+      $.getJSON( "http://193.11.186.149:5000/getrain", function( data ) {
+        var summary = data[0].summary + "";
+        console.log(data[0].summary);
+        summary = summary.toLowerCase();
+        var temp = data[0].temperature;
+        temp = Number((temp).toFixed(0));
+
+        var text = "Vädret är " + summary + " med en temperatur på " + temp + " grader";
+        $("#text").empty();
+        $("#text").append(text);
+
+        $("#image").show("fast", function() {
+          // här ska det displayas en bild senare.
+            $(this).attr('src', 'image2.png');
+          });
+
+      }).fail(function (jqxhr, status, error) {
+          console.log('error', status, error) }
+        );
+
+
+      setInterval(function(){
+          $.getJSON( "http://193.11.186.149:5000/getrain", function( data ) {
+          var summary = data[0].summary + "";
+          console.log(data[0].summary);
+          summary = summary.toLowerCase();
+          var temp = data[0].temperature;
+          temp = Number((temp).toFixed(0));
+
+          var text = "Vädret idag är " + summary + " med en temperatur på " + temp + " grader";
+          $("#text").empty();
+          $("#text").append(text);
+
+          $("#image").show("fast", function() {
+            // här ska det displayas en bild senare.
+              $(this).attr('src', 'image2.png');
+          });
+
+        }).fail(function (jqxhr, status, error) {
+            console.log('error', status, error) }
+          );
+    },120000);
+    });
+    </script>
   </div>
-
-
 </body>
 </html>
